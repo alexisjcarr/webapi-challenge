@@ -4,6 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 
 const projectRouter = require("./routers/projectRouter");
+const actionsRouter = require("./routers/actionsRouter");
 
 const server = express();
 
@@ -17,5 +18,6 @@ server.get("/", (req, res) => {
 
 // ROUTERS GO HERE
 server.use("/projects", projectRouter);
+server.use("/actions", actionsRouter);
 
 module.exports = server;

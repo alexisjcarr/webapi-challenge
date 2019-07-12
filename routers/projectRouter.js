@@ -59,4 +59,37 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, description } = req.body;
+  if (!name || !description) {
+    res.status(400).json({
+      error: "Please enter a name and a description for the project."
+    });
+  } else {
+    try {
+      const project = await db.update(id, req.body);
+      res.status(200).json(project);
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await db.remove(id);
+    if (!project) {
+      res.status(404).json({
+        error: `Project with id ${id} doesn't exist.`
+      });
+    } else {
+      res.status(200).json(project);
+    }
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 module.exports = router;

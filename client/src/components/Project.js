@@ -20,10 +20,10 @@ const Card = styled.div`
 `;
 
 const Project = props => {
-  const { project, id } = props;
+  const { project } = props;
   return (
     <Card>
-      <StyledNav to={`/${id}`}>
+      <StyledNav to={`/${project.id}`}>
         <h1>{project.name}</h1>
       </StyledNav>
     </Card>

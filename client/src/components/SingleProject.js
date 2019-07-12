@@ -13,15 +13,14 @@ const Card = styled.div`
 `;
 
 const SingleProject = props => {
-  const { projects } = props;
-  const project = projects.find(
+  const project = props.projects.find(
     project => `${project.id}` === props.match.params.id
   );
 
   const [projectDetails, setProjectDetails] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/projects/1/actions`)
+      .get(`http://localhost:8080/projects/${project.id}/actions`)
       .then(res => {
         console.log("details", res);
         setProjectDetails(res.data);
@@ -31,19 +30,26 @@ const SingleProject = props => {
       });
   }, [projectDetails]);
 
-  if (false) {
+  if (!project) {
     return <h1>Loading Project... Please wait...</h1>;
   }
 
   return (
     <div style={{ textAlign: "center" }}>
       <Card>
-        <h1>Complete Node.js and Express Challenge</h1>
-        <ul>
-          {projectDetails.map(des => {
-            return <li>{des.description}</li>;
-          })}
-        </ul>
+        <h2>
+          <strong>{project.name}</strong>
+        </h2>
+        <p>
+          <strong>DESCRIPTION</strong>
+        </p>
+        <p>{project.description}</p>
+        <p>
+          <strong>ACTIONS</strong>
+        </p>
+        {projectDetails.map(des => {
+          return <p>{des.description}</p>;
+        })}
       </Card>
     </div>
   );
